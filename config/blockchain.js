@@ -4,7 +4,8 @@ module.exports = {
   // default applies to all environments
   default: {
     enabled: true,
-    client: "geth" // Can be ganache-cli, geth or parity (default: geth)
+    client: "geth", // Can be ganache-cli, geth or parity (default: geth)
+    gasLimit:10000000
   },
 
   development: {

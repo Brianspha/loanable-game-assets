@@ -1,105 +1,105 @@
 {
   "0x002b170dfce48a0c3bc0810ebec15944de801f801189f0c299c0ec93c9be33c6": {
     "contracts": {
-      "0xffeb2085ecfbf6843a0454c5f1a97feef3bd8321f422e91c9df5b4979f7406ef": {
-        "name": "ERC20",
-        "address": "0xB2A149e750b2c1313195f7E98E87Af927F0E185C"
+      "0xc23630d6e1ad89920e4825a939bc7820ecb8a18a860902ac80824ff9a39cee27": {
+        "name": "AssetManager",
+        "address": "0x1b82D03e49B4f2661Ce8342ef2DF591df81DB44d"
       },
       "0xd82f2d05462fb2e11a47bbab5d4bbfc7b9568837e6f4681307e34b54c77486a6": {
         "name": "CTokenManager",
-        "address": "0x2F8aFAf402a6242FA919c281f96836eE3c36Fe86"
+        "address": "0x9C992c7C778bE10C109043AF560B52Da1ef8500E"
       },
-      "0xf02a43c59f41ecc31bc0b61b996ffce6e286c8d81198acb7ef6b07d48901f99b": {
+      "0xffeb2085ecfbf6843a0454c5f1a97feef3bd8321f422e91c9df5b4979f7406ef": {
+        "name": "ERC20",
+        "address": "0x22bDb5AAF255D5ef4514c42de201c37216662449"
+      },
+      "0x2c5cb11ef4ad505718310f9d7369838b43bb458b7f7fdfcdf3a652f003b41259": {
         "name": "Assets",
-        "address": "0x6336cF6EEc7A985b3475C92Ef5e03ee2c99EBe2D"
+        "address": "0x6c96228BF7a1E249cC7C6bB013b57f060f6dC367"
       },
       "0x1f1a955df1a297032698a20ba3c1acf3bf2499fc94f08186c09f0b5bd5824fc7": {
         "name": "GameCenter",
-        "address": "0xD502267008Dd66858fe0b7528C2c9a6C187510CF"
+        "address": "0x7149A465113562943b9e42bF051cBDDfDd32dD36"
       },
       "0xa813dedf06382a27258eab0fc0c192bf972f175f9de8fcfd7b5962e93db77b07": {
         "name": "Migrations",
-        "address": "0x2F6798d89ef37a227669e51D8F8ee366fD76BbF9"
+        "address": "0x45757A4E83AfCdFDED1a7770D1B77EF30211ceF1"
       },
       "0x2e3e299be66814635912fcc46c2b7f5a1e17e135c6ae555f4a2f5be8e2224419": {
         "name": "SafeMath",
-        "address": "0x7fb9f7Cf1471823c4a25d75E58B9E64195e80aBF"
-      },
-      "0x243b70790b392da9605bca2d2014f94658b0617b3c375524b044368d534c6771": {
-        "name": "StreamManager",
-        "address": "0xA863fb46246eB8f2645ed09956617b5F591e7C29"
+        "address": "0x782fa1A3359241426E1e69b3B23D7c31C30b4386"
       },
       "0x6f8addbdfce9cfe2dfff3e3419404182ac98949002847db87895d1e6a9e9a2a6": {
         "name": "Types",
-        "address": "0xB6724320417D073d29E05E175F19C6067b5a7e4f"
+        "address": "0x2289e5fdBF26D2d1f07fCE44FFBcDC791294E663"
       },
       "0x6f76a2c1f4e7877480eaa4ecfa60094253a966071d6d295cb9cac5ae9dd0aa86": {
         "name": "CarefulMath",
-        "address": "0xcede018af41e9dff4D6A60e857F9c408008D5B99"
+        "address": "0x75E38AE9814dD1CD333Ca906a3E757b7670b7212"
       },
       "0xe6922a37818679824ed7259485109af3c177a6b86e7052c48f78bf40c466077f": {
         "name": "Exponential",
-        "address": "0x40d3ed865BB11CD16eeb69b455d7144F34b340d3"
+        "address": "0x79Ffa9e1651D35762B510974D09dcd6c04a3F6Bc"
       },
       "0xf343eef94d4afec308e9a458d15e7b587559c096d0891ee6ae322e9099819756": {
         "name": "OwnableWithoutRenounce",
-        "address": "0xFB9DbFeEAf1B3498213aDFF31b0ebbE48B39B1B4"
+        "address": "0xf097874e332ce03E9C853BC9258c9608374deBE5"
       },
       "0x1626613c60eabc6b65ec3198f179ff279eea6f3d9bac299db45ab873080e490d": {
         "name": "PausableWithoutRenounce",
-        "address": "0x2B63879139E45Ee0aCb7D20Cec2b67b8637E1Bd6"
+        "address": "0x948739d290C6619c54eE26A90843244782720D27"
       },
       "0xda60c45797bee4a006f2f636d790d6950fee60c851bffbc8b9a5c280309212b7": {
         "name": "PauserRoleWithoutRenounce",
-        "address": "0xDC73c6b887Bc1f4E81852f841e003D9dEd39A0C0"
+        "address": "0x33840a591A964632A8acA6267712CA2a0D649b15"
       },
       "0xd1a8225a828101c1f2cf6e04cd29aa0aef57fc13575a5f2d2c6d1cbc32f84821": {
         "name": "Roles",
-        "address": "0xd60547610460Cf8Ee083c69Cc86196680C062dce"
+        "address": "0xe796F2aec0D2261788c8eD75c553062E3DBa81Df"
       },
       "0x202b047c1d9bcba0631ce0ed87038932cf0a60b5516abfe1e942868066c411ec": {
         "name": "MinterRole",
-        "address": "0xA066330B70Ad2C641F880f3bB5D638e4CeF28fa4"
+        "address": "0x0ff391b1e426544829D7d5F31D3EEBAbAB3F20a6"
       },
       "0xe6c4fc5919a4c16cbd842b0acc47f2288e63462c9bce7ab5d48f029886980a85": {
         "name": "Counters",
-        "address": "0xB50F0D8CfF0f0a407845FE68833d157900E14970"
+        "address": "0x2A4fD39F2EA7dce9e593ef77CEbC852Af80b9cCA"
       },
       "0xedcc1e958b0e7b3e36feb43d9722110a2fda0129dc1fb07f71839a60b3e1ec81": {
         "name": "ERC165",
-        "address": "0x72836FFAe280a5d9acAe8Fc30CFA96AC1b61a5c6"
+        "address": "0xFcA3b94925D56892625acA185F7Ff5E050b406e4"
       },
       "0x1990300374ea0d6919b3213909460cea82ac2dd172f4d219be859af0b3bc9063": {
         "name": "ERC721",
-        "address": "0x57d040A05a42059eCc863631Ee483922827db4bd"
+        "address": "0x738A264B04A565b9e16b9c6cF97Cd85f56b8D375"
       },
       "0x08cfa3a6152acb99df1999f2cd5e2543c3fbab993df5129174590166fdddb01c": {
         "name": "ERC721Enumerable",
-        "address": "0xDfAfF1FA3c02f67C240197F2C76AB09a31ce014c"
+        "address": "0x8C70971D6DEfBBFa008DCD4c228cBd2Fd52Cb565"
       },
       "0xd95fd39db7da0f168a7ffa238fe01df47ed86433ba3ca0fc49b3210cee3ba309": {
         "name": "ERC721Metadata",
-        "address": "0x52D4f70bB97B4f6C6e762CAb389C0D64AF7062d8"
+        "address": "0x17Dd674F2dB66b9Bbb487Dea2A95242796d3eAc3"
       },
       "0x81156188961f5a704fc646bbb43ae8d6dd2c8a57444e586db6af8468193ff3ef": {
         "name": "ERC721MetadataMintable",
-        "address": "0xAd71E697E9A84F332ded3690c4C543b89733d052"
+        "address": "0x4Db91EcEBB832aF0B6a426fb9B1b72214DCBc75D"
       },
       "0xb19344e1d35cfa9cf66176aed526df40e800691edf79727f860f75af8e2a7693": {
         "name": "Address",
-        "address": "0xd20c4D3e61335A3237dE404638C1d72ad7089EAE"
+        "address": "0x9dD98F68512Ed1122ACD5100CD02fcEfe792Ff1b"
       },
       "0x166cc91f8f5920afc3505254fa39cbbff03ce74853c9ebc4c9bfe0ae138019df": {
         "name": "ReentrancyGuard",
-        "address": "0x31edbaB5f62d8932649F10a773698B27CE517013"
+        "address": "0xe9602B21f4BbA40730b9cA61977e1E82738f3D2F"
       },
       "0x63c741be7f937ca012341fc706af3a82bb5d727aa34046ea685a64bd0bea33fb": {
         "name": "Initializable",
-        "address": "0xDe25860fe9074bA4842CA4B65c83f1F58408D3DD"
+        "address": "0x7Ea14862e8953926183F9d631F63E0f2220e23a3"
       },
       "0x05dfaba2f5ece3bc5089b6484716011e17324d9e0f019c362d4faf02ffb66387": {
         "name": "Sablier",
-        "address": "0x5662dC9f30f84cd787edbE2501BFC80167950962"
+        "address": "0x75Ee0BC72b238181E25557e774279AC9Fea01236"
       }
     },
     "name": "development"

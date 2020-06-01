@@ -31,6 +31,11 @@ module.exports = {
     // minimalContractSize: false,
     // filteredFields: [],
     deploy: {
+      AssetManager: {
+        args: [
+         
+        ]
+      },
       ERC20: {
         args: [
           "TestToken",
@@ -59,10 +64,13 @@ module.exports = {
         gas: 800000
       })
       console.log('web3.eth.defaultAccount ', web3.eth.defaultAccount)
-      await contracts.Assets.methods.init("My asset", "MY", web3.eth.defaultAccount).send({
+      await contracts.Assets.methods.init("My Assets register", "MY", web3.eth.defaultAccount).send({
         gas: 800000
       })
-      console.log('init Asset...')
+      await contracts.AssetManager.methods.init(contracts.Assets.options.address,contracts.Sablier.options.address).send({
+        gas: 800000
+      })
+      console.log('init Assets...')
       console.log('approved token...')
     },
     development: {

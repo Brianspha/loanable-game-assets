@@ -13,24 +13,12 @@ contract Assets is
     ERC721MetadataMintable
 {
     /*=========================== Structs definition Start =========================== */
-    struct Asset {
-        bytes32 rental_id;
-        uint256 asset_id;
-        address asset_owner;
-        address[] renters;
-        uint256[] stream_ids;
-        uint256 accumalatedIncome;
-        bool canMove;
-        bool active;
-    }
+
     /*=========================== Events definition Start =========================== */
-    event AssetMovement(bytes32 indexed id);
     /*=========================== Modfiers definition Start =========================== */
 
     /*=========================== Contract Variables definition Start =========================== */
-
-    mapping(bytes32 => Asset) registeredAssets;
-    bytes32[] assetKeys;
+    Counters.Counter tokenCount;
 
     /*=========================== Contract function definition Start =========================== */
 
@@ -48,70 +36,23 @@ contract Assets is
         _addMinter(minter);
     }
 
-    function registerAssetMovement(
-        address renter,
-        uint256 stream_id,
-        uint256 asset_id,
-        uint256 rentalAmount
-    ) public {
-        require(address(0) != renter, "invalid renter address");
-        require(msg.sender != address(0), "invalid sender address");
-        require(!_exists(asset_id), "asset does not exists");
-        require(rentalAmount > 0, "rental amount cannot be 0");
-        bytes32 id = keccak256(
-            abi.encodePacked(
-                renter,
-                msg.sender,
-                stream_id,
-                asset_id,
-                block.timestamp
-            )
-        );
+    function createNewAsset(string memory meta_data) onlyMinter public returns (uint256) {
+        uint256 tokenId = tokenCount.current();
         require(
-            !registeredAssets[id].active,
-            "Asset cannot be moved in the same block time"
+          mintWithTokenURI(msg.sender, tokenId, meta_data),
+            "error minting new asset"
         );
-        registeredAssets[id].active = true;
-        registeredAssets[id].canMove = false;
-        registeredAssets[id].rental_id = id;
-        registeredAssets[id].renters.push(renter);
-        registeredAssets[id].stream_ids.push(stream_id);
-        registeredAssets[id].asset_id = asset_id;
-        registeredAssets[id].accumalatedIncome = registeredAssets[id]
-            .accumalatedIncome
-            .add(rentalAmount);
-        assetKeys.push(id);
-        emit AssetMovement(id);
+        return tokenId;
     }
 
-    function rentalPeriodOver(bytes32 asset_id) public returns (bool) {
-        require(msg.sender != address(0), "invalid sender address");
-        require(
-            registeredAssets[asset_id].active,
-            "Asset movement hasnt been registered"
-        );
-        registeredAssets[asset_id].canMove = true;
+    function exists(uint256 asset_index) public view returns (bool) {
+        return _exists(asset_index);
     }
 
-    function getAllAssetKeys() public view returns (bytes32[] memory) {
-        return assetKeys;
-    }
-
-    function getAssetDetails(bytes32 asset_id)
-        public
-        view
-        returns (
-            address[] memory,
-            uint256[] memory,
-            uint256,
-            bool
-        )
+    function isApprovedOrOwner(address assetOwner, uint256 asset_index)
+        public view
+        returns (bool)
     {
-        return (
-            registeredAssets[asset_id].renters,
-            registeredAssets[asset_id].stream_ids,
-            registeredAssets[asset_id].accumalatedIncome,
-            registeredAssets[asset_id].canMove
-        );
+        return _isApprovedOrOwner(assetOwner, asset_index);
     }
 }
