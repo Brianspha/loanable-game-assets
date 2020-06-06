@@ -94,14 +94,6 @@ contract AssetManager is Initializable {
             standardToken.approve(address(sablierContract), rentalAmount),
             "Something went wrong whilst approving token"
         );
-        require(
-            standardToken.transferFrom(
-                msg.sender,
-                address(sablierContract),
-                rentalAmount
-            ),
-            "error whilst rransferring"
-        );
         uint256 stream_id = sablierContract.createStream(
             owner,
             rentalAmount,
