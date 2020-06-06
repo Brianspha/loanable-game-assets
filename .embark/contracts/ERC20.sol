@@ -1,83 +1,69 @@
-pragma solidity >= 0.5 .10;
+pragma solidity >=0.5.10;
 
-import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/contracts/IERC20.sol";
 import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/contracts/SafeMath.sol";
-import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/contracts/Context.sol";
+import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/node_modules/@openzeppelin/upgrades/contracts/Initializable.sol";
+import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/node_modules/@openzeppelin/contracts-ethereum-package/contracts/access/roles/MinterRole.sol";
+import "C:/Users/user-pc/Documents/Github/loanable-game-assets/.embark/node_modules/@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Detailed.sol";
 
 
 /**
- * @dev Optional functions from the ERC20 standard.
+ * @dev Implementation of the {IERC20} interface.
+ *
+ * This implementation is agnostic to the way tokens are created. This means
+ * that a supply mechanism has to be added in a derived contract using {_mint}.
+ * For a generic mechanism see {ERC20Mintable}.
+ *
+ * TIP: For a detailed writeup see our guide
+ * https://forum.zeppelin.solutions/t/how-to-implement-erc20-supply-mechanisms/226[How
+ * to implement supply mechanisms].
+ *
+ * We have followed general OpenZeppelin guidelines: functions revert instead
+ * of returning `false` on failure. This behavior is nonetheless conventional
+ * and does not conflict with the expectations of ERC20 applications.
+ *
+ * Additionally, an {Approval} event is emitted on calls to {transferFrom}.
+ * This allows applications to reconstruct the allowance for all accounts just
+ * by listening to said events. Other implementations of the EIP may not emit
+ * these events, as it isn't required by the specification.
+ *
+ * Finally, the non-standard {decreaseAllowance} and {increaseAllowance}
+ * functions have been added to mitigate the well-known issues around setting
+ * allowances. See {IERC20-approve}.
  */
-contract ERC20 is IERC20, Context {
-    using SafeMath
-    for uint256;
-    string private _name;
-    string private _symbol;
-    uint8 private _decimals;
-    address private _owner;
+contract ERC20 is Initializable, Context, IERC20, MinterRole, ERC20Detailed {
+    using SafeMath for uint256;
 
     mapping(address => uint256) private _balances;
 
     mapping(address => mapping(address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
-    /**
-     * @dev Sets the values for `name`, `symbol`, and `decimals`. All three of
-     * these values are immutable: they can only be set once during
-     * construction.
-     */
-    constructor(string memory name, string memory symbol, uint8 decimals, uint256 initialsupply) public {
-        _name = name;
-        _symbol = symbol;
-        _decimals = decimals;
-        _owner = msg.sender;
-        _totalSupply = initialsupply.mul(10** 18);
-        _mint(_owner, _totalSupply);
-    }
-
-    /**
-     * @dev Returns the name of the token.
-     */
-    function name() public view returns(string memory) {
-        return _name;
-    }
-
-    /**
-     * @dev Returns the symbol of the token, usually a shorter version of the
-     * name.
-     */
-    function symbol() public view returns(string memory) {
-        return _symbol;
-    }
-
-    /**
-     * @dev Returns the number of decimals used to get its user representation.
-     * For example, if `decimals` equals `2`, a balance of `505` tokens should
-     * be displayed to a user as `5,05` (`505 / 10 ** 2`).
-     *
-     * Tokens usually opt for a value of 18, imitating the relationship between
-     * Ether and Wei.
-     *
-     * NOTE: This information is only used for _display_ purposes: it in
-     * no way affects any of the arithmetic of the contract, including
-     * {IERC20-balanceOf} and {IERC20-transfer}.
-     */
-    function decimals() public view returns(uint8) {
-        return _decimals;
-    }
-
 
     /**
      * @dev See {IERC20-totalSupply}.
      */
-    function totalSupply() public view returns(uint256) {
+    function totalSupply() public view returns (uint256) {
         return _totalSupply;
+    }
+
+    function initialize(
+        string memory tokenName,
+        string memory tokenSymbol,
+        uint8 decimals,
+        uint256 supply
+    ) public initializer {
+        require(msg.sender != address(0), "Invalid sender address");
+        require(supply > 0, "Supply must be greater than 0");
+        require(decimals > 0, "decimals must be greater than 0");
+        _mint(msg.sender, supply);
+        ERC20Detailed.initialize(tokenName, tokenSymbol, decimals);
+        _totalSupply = supply;
     }
 
     /**
      * @dev See {IERC20-balanceOf}.
      */
-    function balanceOf(address account) public view returns(uint256) {
+    function balanceOf(address account) public view returns (uint256) {
         return _balances[account];
     }
 
@@ -89,7 +75,7 @@ contract ERC20 is IERC20, Context {
      * - `recipient` cannot be the zero address.
      * - the caller must have a balance of at least `amount`.
      */
-    function transfer(address recipient, uint256 amount) public returns(bool) {
+    function transfer(address recipient, uint256 amount) public returns (bool) {
         _transfer(_msgSender(), recipient, amount);
         return true;
     }
@@ -97,7 +83,11 @@ contract ERC20 is IERC20, Context {
     /**
      * @dev See {IERC20-allowance}.
      */
-    function allowance(address owner, address spender) public view returns(uint256) {
+    function allowance(address owner, address spender)
+        public
+        view
+        returns (uint256)
+    {
         return _allowances[owner][spender];
     }
 
@@ -108,7 +98,7 @@ contract ERC20 is IERC20, Context {
      *
      * - `spender` cannot be the zero address.
      */
-    function approve(address spender, uint256 amount) public returns(bool) {
+    function approve(address spender, uint256 amount) public returns (bool) {
         _approve(_msgSender(), spender, amount);
         return true;
     }
@@ -125,9 +115,20 @@ contract ERC20 is IERC20, Context {
      * - the caller must have allowance for `sender`'s tokens of at least
      * `amount`.
      */
-    function transferFrom(address sender, address recipient, uint256 amount) public returns(bool) {
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) public returns (bool) {
         _transfer(sender, recipient, amount);
-        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
+        _approve(
+            sender,
+            _msgSender(),
+            _allowances[sender][_msgSender()].sub(
+                amount,
+                "ERC20: transfer amount exceeds allowance"
+            )
+        );
         return true;
     }
 
@@ -143,8 +144,15 @@ contract ERC20 is IERC20, Context {
      *
      * - `spender` cannot be the zero address.
      */
-    function increaseAllowance(address spender, uint256 addedValue) public returns(bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));
+    function increaseAllowance(address spender, uint256 addedValue)
+        public
+        returns (bool)
+    {
+        _approve(
+            _msgSender(),
+            spender,
+            _allowances[_msgSender()][spender].add(addedValue)
+        );
         return true;
     }
 
@@ -162,8 +170,18 @@ contract ERC20 is IERC20, Context {
      * - `spender` must have allowance for the caller of at least
      * `subtractedValue`.
      */
-    function decreaseAllowance(address spender, uint256 subtractedValue) public returns(bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero"));
+    function decreaseAllowance(address spender, uint256 subtractedValue)
+        public
+        returns (bool)
+    {
+        _approve(
+            _msgSender(),
+            spender,
+            _allowances[_msgSender()][spender].sub(
+                subtractedValue,
+                "ERC20: decreased allowance below zero"
+            )
+        );
         return true;
     }
 
@@ -181,11 +199,22 @@ contract ERC20 is IERC20, Context {
      * - `recipient` cannot be the zero address.
      * - `sender` must have a balance of at least `amount`.
      */
-    function _transfer(address sender, address recipient, uint256 amount) internal {
+    event emitBalance(uint256 indexed balance);
+
+    function _transfer(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) internal {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
-
-        _balances[sender] = _balances[sender].sub(amount, "ERC20: transfer amount exceeds balance");
+        require(_balances[sender] > 0, "insufficient balance");
+        emit emitBalance(_balances[sender]);
+        emit emitBalance(_balances[sender]);
+        _balances[sender] = _balances[sender].sub(
+            amount,
+            "ERC20: transfer amount exceeds balance"
+        );
         _balances[recipient] = _balances[recipient].add(amount);
         emit Transfer(sender, recipient, amount);
     }
@@ -221,7 +250,10 @@ contract ERC20 is IERC20, Context {
     function _burn(address account, uint256 amount) internal {
         require(account != address(0), "ERC20: burn from the zero address");
 
-        _balances[account] = _balances[account].sub(amount, "ERC20: burn amount exceeds balance");
+        _balances[account] = _balances[account].sub(
+            amount,
+            "ERC20: burn amount exceeds balance"
+        );
         _totalSupply = _totalSupply.sub(amount);
         emit Transfer(account, address(0), amount);
     }
@@ -239,7 +271,11 @@ contract ERC20 is IERC20, Context {
      * - `owner` cannot be the zero address.
      * - `spender` cannot be the zero address.
      */
-    function _approve(address owner, address spender, uint256 amount) internal {
+    function _approve(
+        address owner,
+        address spender,
+        uint256 amount
+    ) internal {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
 
@@ -255,6 +291,15 @@ contract ERC20 is IERC20, Context {
      */
     function _burnFrom(address account, uint256 amount) internal {
         _burn(account, amount);
-        _approve(account, _msgSender(), _allowances[account][_msgSender()].sub(amount, "ERC20: burn amount exceeds allowance"));
+        _approve(
+            account,
+            _msgSender(),
+            _allowances[account][_msgSender()].sub(
+                amount,
+                "ERC20: burn amount exceeds allowance"
+            )
+        );
     }
+
+    uint256[50] private ______gap;
 }

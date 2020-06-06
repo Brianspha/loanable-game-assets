@@ -6,6 +6,7 @@ module.exports = {
 "EIP20Interface": require('./EIP20Interface.js').default,
 "ICERC20": require('./ICERC20.js').default,
 "IERC165": require('./IERC165.js').default,
+"ERC20Detailed": require('./ERC20Detailed.js').default,
 "IERC721": require('./IERC721.js').default,
 "IERC721Enumerable": require('./IERC721Enumerable.js').default,
 "IERC721Metadata": require('./IERC721Metadata.js').default,

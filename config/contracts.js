@@ -1,5 +1,8 @@
-const bigNumber = require('bignumber.js')
-console.log('new bigNumber(20000000000000000000000000000).toFixed()', new bigNumber(20000000000000000000000000000).toFixed())
+const bigNumber = require("bignumber.js");
+console.log(
+  "new bigNumber(20000000000000000000000000000).toFixed()",
+  new bigNumber(20000000000000000000000000000).toFixed()
+);
 module.exports = {
   // default applies to all environments
   default: {
@@ -8,7 +11,7 @@ module.exports = {
       "$EMBARK",
       "$WEB3", // uses pre existing web3 object if available (e.g in Mist)
       "ws://localhost:8546",
-      "http://localhost:8546"
+      "http://localhost:8546",
     ],
 
     // Automatically call `ethereum.enable` if true.
@@ -32,51 +35,60 @@ module.exports = {
     // filteredFields: [],
     deploy: {
       AssetManager: {
-        args: [
-         
-        ]
+        args: [],
       },
       ERC20: {
-        args: [
+        args: [],
+      },
+      CTokenManager: {
+        args: [],
+      },
+      Sablier: {
+        deps: ["ERC20"],
+        args: ["$CTokenManager"],
+      },
+      Assets: {
+        args: [],
+      },
+    },
+    afterDeploy: async ({ contracts, web3, logger }) => {
+      await contracts.ERC20.methods
+        .initialize(
           "TestToken",
           "TT",
           18,
           new bigNumber(20000000000000000000000000000).toFixed()
-        ]
-      },
-      CTokenManager: {
-        args: []
-      },
-      "Sablier": {
-        deps: ['ERC20'],
-        args: ['$CTokenManager']
-      },
-      "Assets": {
-        args: []
-      }
-    },
-    afterDeploy: async ({
-      contracts,
-      web3,
-      logger
-    }) => {
-      await contracts.ERC20.methods.approve(contracts.Sablier.options.address, new bigNumber(20000000000000000000000000000).toFixed()).send({
-        gas: 800000
-      })
-      console.log('web3.eth.defaultAccount ', web3.eth.defaultAccount)
-      await contracts.Assets.methods.init("My Assets register", "MY", web3.eth.defaultAccount).send({
-        gas: 800000
-      })
-      await contracts.AssetManager.methods.init(contracts.Assets.options.address,contracts.Sablier.options.address).send({
-        gas: 800000
-      })
-      console.log('init Assets...')
-      console.log('approved token...')
+        )
+        .send({
+          gas: 8000000,
+        });
+      await contracts.ERC20.methods
+        .approve(
+          contracts.Sablier.options.address,
+          new bigNumber(10000000000000000000000000000).toFixed()
+        )
+        .send({
+          gas: 800000,
+        });
+      console.log("web3.eth.defaultAccount ", web3.eth.defaultAccount);
+      await contracts.Assets.methods
+        .init("My Assets register", "MY", web3.eth.defaultAccount)
+        .send({
+          gas: 800000,
+        });
+      await contracts.AssetManager.methods
+        .init(
+          contracts.Assets.options.address,
+          contracts.Sablier.options.address
+        )
+        .send({
+          gas: 800000,
+        });
+      console.log("init Assets...");
+      console.log("approved token...");
     },
     development: {
-      deploy: {
-
-      }
+      deploy: {},
     },
     // merges with the settings in default
     // used with "embark run privatenet"
@@ -85,5 +97,5 @@ module.exports = {
     // you can name an environment with specific settings and then specify with
     // "embark run custom_name" or "embark blockchain custom_name"
     // custom_name: {}
-  }
-}
+  },
+};
