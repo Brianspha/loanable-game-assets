@@ -42,6 +42,7 @@ contract Assets is
           mintWithTokenURI(msg.sender, tokenId, meta_data),
             "error minting new asset"
         );
+        tokenCount.increment();  
         return tokenId;
     }
 
