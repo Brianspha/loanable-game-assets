@@ -2,7 +2,7 @@ pragma solidity >=0.5.10;
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "./Sablier.sol";
 import "./Assets.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import "./shared-contracts/interfaces/ICERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 
 
@@ -97,7 +97,7 @@ contract AssetManager is Initializable {
         uint256 stream_id = sablierContract.createStream(
             owner,
             rentalAmount,
-            tokenAddress,
+            address(standardToken),
             startDate,
             endDate
         );

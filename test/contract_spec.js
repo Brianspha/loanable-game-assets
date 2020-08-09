@@ -72,15 +72,6 @@ contract("ERC720", async () => {
     assert.strictEqual(receipt != null, true);
     // console.log('receipt: ', receipt.events.Approval.returnValues)
   });
-  it("should approve to accounts[1] 100000000000000000000000", async () => {
-    var receipt = await Token.methods
-      .approve(accounts[1], new bigNumber(1000000000000000000000000000000))
-      .send({
-        gas: 6000000,
-      });
-    assert.strictEqual(receipt != null, true);
-    // console.log('receipt: ', receipt.events.Approval.returnValues)
-  });
  /**/ it("should transfer 100000000000000000000000", async () => {
     var receipt = await Token.methods
       .transfer(accounts[1], new bigNumber(200000000000000000000000000))
@@ -221,7 +212,7 @@ contract("AssetManager", async () => {
       )
       .send({ gas: 6000000, from: accounts[1] });
       console.log(receipt.events.Balance.returnValues)
-    assert.strictEqual(receipt != null, true);
+    assert.strictEqual(receipt !== null, true);
   });
 });
 function calculateDeposit(delta, deposit) {
